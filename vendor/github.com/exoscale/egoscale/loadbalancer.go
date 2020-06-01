@@ -17,19 +17,11 @@ type NetworkLoadBalancerServerStatus struct {
 	Status     string
 }
 
-func nlbServerStatusFromAPI(svc *v2.LoadBalancerService) []*NetworkLoadBalancerServerStatus {
-	serverStatus := make([]*NetworkLoadBalancerServerStatus, 0)
-
-	if svc.HealthcheckStatus != nil {
-		for _, st := range *svc.HealthcheckStatus {
-			serverStatus = append(serverStatus, &NetworkLoadBalancerServerStatus{
-				InstanceIP: net.ParseIP(optionalString(st.PublicIp)),
-				Status:     optionalString(st.Status),
-			})
-		}
+func nlbServerStatusFromAPI(st *v2.LoadBalancerServerStatus) *NetworkLoadBalancerServerStatus {
+	return &NetworkLoadBalancerServerStatus{
+		InstanceIP: net.ParseIP(optionalString(st.PublicIp)),
+		Status:     optionalString(st.Status),
 	}
-
-	return serverStatus
 }
 
 // NetworkLoadBalancerServiceHealthcheck represents a Network Load Balancer service healthcheck.
@@ -75,8 +67,19 @@ func nlbServiceFromAPI(svc *v2.LoadBalancerService) *NetworkLoadBalancerService 
 			Retries:  optionalInt64(svc.Healthcheck.Retries),
 			URI:      optionalString(svc.Healthcheck.Uri),
 		},
-		HealthcheckStatus: nlbServerStatusFromAPI(svc),
-		State:             optionalString(svc.State),
+		HealthcheckStatus: func() []*NetworkLoadBalancerServerStatus {
+			statuses := make([]*NetworkLoadBalancerServerStatus, 0)
+
+			if svc.HealthcheckStatus != nil {
+				for _, st := range *svc.HealthcheckStatus {
+					st := st
+					statuses = append(statuses, nlbServerStatusFromAPI(&st))
+				}
+			}
+
+			return statuses
+		}(),
+		State: optionalString(svc.State),
 	}
 }
 
@@ -136,7 +139,12 @@ func (nlb *NetworkLoadBalancer) AddService(ctx context.Context, svc *NetworkLoad
 				Interval: &healthcheckInterval,
 				Timeout:  &healthcheckTimeout,
 				Retries:  &svc.Healthcheck.Retries,
-				Uri:      &svc.Healthcheck.URI,
+				Uri: func() *string {
+					if svc.Healthcheck.Mode == "http" {
+						return &svc.Healthcheck.URI
+					}
+					return nil
+				}(),
 			},
 			InstancePool: &v2.Resource{Id: &svc.InstancePoolID},
 			Port:         &svc.Port,
