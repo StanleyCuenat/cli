@@ -296,7 +296,13 @@ func (c *Client) GetNetworkLoadBalancer(ctx context.Context, zone, id string) (*
 		return nil, err
 	}
 	if resp.StatusCode() != http.StatusOK {
-		return nil, fmt.Errorf("unexpected response from API: %s", resp.Status())
+		switch resp.StatusCode() {
+		case http.StatusNotFound:
+			return nil, ErrNotFound
+
+		default:
+			return nil, fmt.Errorf("unexpected response from API: %s", resp.Status())
+		}
 	}
 
 	nlb := nlbFromAPI(resp.JSON200)

@@ -9,7 +9,7 @@ require (
 	github.com/danielgtaylor/openapi-cli-generator v0.0.0-20200228065623-fa97dc37f943
 	github.com/deepmap/oapi-codegen v1.3.8 // indirect
 	github.com/dustin/go-humanize v1.0.0
-	github.com/exoscale/egoscale v0.25.1-0.20200603122614-0d9cb6d5026a
+	github.com/exoscale/egoscale v0.25.1-0.20200603152141-3c8fccc224ab
 	github.com/fatih/camelcase v1.0.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/go-ini/ini v1.42.0

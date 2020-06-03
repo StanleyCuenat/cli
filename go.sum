@@ -90,6 +90,8 @@ github.com/dustin/go-humanize v1.0.0 h1:VSnTsYCnlFHaM2/igO1h6X3HA71jcobQuxemgkq4
 github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
 github.com/exoscale/egoscale v0.25.1-0.20200603122614-0d9cb6d5026a h1:TkP+A9zhykN6NFXT6J2rePoQwJrb2OItzL0nfEh4dSs=
 github.com/exoscale/egoscale v0.25.1-0.20200603122614-0d9cb6d5026a/go.mod h1:WThejIJgwf32NoUfOhIHIH7GfD6ZU4QK9mC1s8inIaU=
+github.com/exoscale/egoscale v0.25.1-0.20200603152141-3c8fccc224ab h1:4aQndEg7E5mwQT9oCq/aIOB20QjLsIUXbZiDsN2svls=
+github.com/exoscale/egoscale v0.25.1-0.20200603152141-3c8fccc224ab/go.mod h1:WThejIJgwf32NoUfOhIHIH7GfD6ZU4QK9mC1s8inIaU=
 github.com/fatih/camelcase v1.0.0 h1:hxNvNX/xYBp0ovncs8WyWZrOrpBNub/JfaMvbURyft8=
 github.com/fatih/camelcase v1.0.0/go.mod h1:yN2Sb0lFhZJUdVvtELVWefmrXpuZESvPmqwoZc+/fpc=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
